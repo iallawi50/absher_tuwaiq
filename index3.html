@@ -181,6 +181,10 @@
       document.getElementById("major").textContent = data.major;
       document.getElementById("status").textContent = data.status;
       document.getElementById("degree").textContent = data.degree;
+
+      if (navigator.serviceWorker) {
+        navigator.serviceWorker.register("sw.js");
+      }
     </script>
   </body>
 </html>

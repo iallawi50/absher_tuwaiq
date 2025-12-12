@@ -248,6 +248,10 @@
         div.textContent = item;
         appList.appendChild(div);
       });
+
+      if (navigator.serviceWorker) {
+        navigator.serviceWorker.register("sw.js");
+      }
     </script>
   </body>
 </html>

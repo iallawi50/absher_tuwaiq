@@ -161,6 +161,10 @@
       document.getElementById("name").textContent = data.name;
       document.getElementById("id-number").textContent = data.id;
       document.getElementById("id-status").textContent = data.status;
+
+      if (navigator.serviceWorker) {
+        navigator.serviceWorker.register("sw.js");
+      }
     </script>
   </body>
 </html>

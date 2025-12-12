@@ -406,6 +406,10 @@
         div.textContent = item;
         sec.appendChild(div);
       });
+
+      if (navigator.serviceWorker) {
+        navigator.serviceWorker.register("sw.js");
+      }
     </script>
   </body>
 </html>

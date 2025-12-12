@@ -207,6 +207,10 @@
 
         container.appendChild(card);
       });
+
+      if (navigator.serviceWorker) {
+        navigator.serviceWorker.register("sw.js");
+      }
     </script>
   </body>
 </html>
