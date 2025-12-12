@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>سجل الفنادق</title>
+
+    <!-- خط Tajawal -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- أيقونات -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <style>
+      body {
+        margin: 0;
+        font-family: "Tajawal", sans-serif;
+        background: linear-gradient(#444929, #000);
+        min-height: 100vh;
+        padding: 40px;
+        color: #fff;
+      }
+
+      .title {
+        text-align: center;
+        font-size: 36px;
+        font-weight: 800;
+        margin-bottom: 40px;
+      }
+
+      /* الأعمدة */
+      .columns {
+        display: grid;
+        grid-template-columns: 260px 1fr 1fr;
+        gap: 35px;
+      }
+
+      /* الكروت */
+      .card {
+        background: #fff;
+        padding: 22px;
+        border-radius: 18px;
+        color: #222;
+        margin-bottom: 18px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.22);
+      }
+
+      /* الصورة */
+      .image-card {
+        padding: 0;
+      }
+      .image-card img {
+        width: 100%;
+        border-radius: 18px;
+      }
+
+      /* زر الذكاء الاصطناعي */
+      .ai-btn {
+        width: calc(100% - 34px);
+        margin: 14px auto 20px auto;
+        display: block;
+        padding: 11px;
+        background: linear-gradient(90deg, #2e8b57, #1f6f45);
+        color: #fff;
+        border: none;
+        border-radius: 12px;
+        font-size: 15px;
+        font-weight: 700;
+        cursor: pointer;
+        transform: translateY(-6px);
+        transition: 0.3s ease;
+      }
+      .ai-btn:hover {
+        background: linear-gradient(90deg, #297a4e, #185e38);
+      }
+
+      /* عنوان البطاقة */
+      .card-label {
+        font-size: 17px;
+        font-weight: 700;
+        color: #243447;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .card-value {
+        font-size: 18px;
+        font-weight: 600;
+      }
+
+      /* كارد التابعين */
+      .follower-card {
+        background: #f6f7f9;
+        border-radius: 14px;
+        padding: 12px 14px;
+        margin-bottom: 10px;
+        border-right: 4px solid #2e8b57;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.12);
+      }
+
+      .follower-item {
+        font-size: 15px;
+        margin-bottom: 4px;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .columns {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+        body {
+          padding: 18px;
+        }
+        .title {
+          font-size: 28px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="title">سجل الفنادق</div>
+
+    <div class="columns">
+      <!-- العمود الأول -->
+      <div>
+        <div class="card image-card">
+          <img src="./nadr.jpg" />
+          <button class="ai-btn">التحقق بالذكاء الاصطناعي</button>
+        </div>
+
+        <div class="card">
+          <div class="card-label"><i class="fa-solid fa-user"></i> الاسم</div>
+          <hr />
+          <div class="card-value" id="guest-name">عبدالله علي</div>
+        </div>
+      </div>
+
+      <!-- العمود الثاني -->
+      <div>
+        <div class="card">
+          <div class="card-label">
+            <i class="fa-solid fa-id-card"></i> رقم الهوية
+          </div>
+          <hr />
+          <div class="card-value" id="guest-id">1092234578</div>
+        </div>
+      </div>
+
+      <!-- العمود الثالث -->
+      <div>
+        <div class="card">
+          <div class="card-label">
+            <i class="fa-solid fa-users"></i> التابعين
+          </div>
+          <hr />
+          <div id="followers-list"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh"></script>
+    <script src="./app.js"></script>
+
+    <script>
+      const data = {
+        name: "نادر هاجد الشهري",
+        id: "1092234578",
+
+        followers: [
+          {
+            name: "هاجد",
+            id: "1158823411",
+            relation: "ابن",
+          },
+          {
+            name: "حمد",
+            id: "1089912245",
+            relation: "ابن",
+          },
+        ],
+      };
+
+      /* تعبئة البيانات */
+      document.getElementById("guest-name").textContent = data.name;
+      document.getElementById("guest-id").textContent = data.id;
+
+      /* تعبئة التابعين */
+      let container = document.getElementById("followers-list");
+
+      data.followers.forEach((f) => {
+        let card = document.createElement("div");
+        card.className = "follower-card";
+
+        card.innerHTML = `
+        <div class="follower-item"><strong>الاسم:</strong> ${f.name}</div>
+        <div class="follower-item"><strong>الهوية:</strong> ${f.id}</div>
+        <div class="follower-item"><strong>صلة القرابة:</strong> ${f.relation}</div>
+    `;
+
+        container.appendChild(card);
+      });
+    </script>
+  </body>
+</html>

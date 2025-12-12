@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>لوحة الجهات الامنية</title>
+
+    <!-- خط Tajawal -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- أيقونات -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      body {
+        margin: 0;
+        font-family: "Tajawal", sans-serif;
+
+        /* نفس الخلفية الثابتة */
+        background: linear-gradient(#444929, #000);
+        min-height: 100vh;
+        padding: 40px;
+        color: #fff;
+      }
+
+      .title {
+        text-align: center;
+        font-size: 36px;
+        font-weight: 800;
+        margin-bottom: 40px;
+      }
+
+      /* ===== الأعمدة ===== */
+      .columns {
+        display: grid;
+        grid-template-columns: 260px 1fr 1fr;
+        gap: 35px;
+      }
+
+      /* ===== الكارد ===== */
+      .card {
+        background: #ffffff;
+        padding: 22px;
+        border-radius: 18px;
+        color: #222;
+        margin-bottom: 18px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.22);
+      }
+
+      /* ===== الصورة ===== */
+      .image-card {
+        padding: 0;
+      }
+      .image-card img {
+        width: 100%;
+        border-radius: 18px;
+      }
+
+      /* زر الذكاء الاصطناعي */
+      .ai-btn {
+        width: calc(100% - 34px);
+        margin: 14px auto 20px auto;
+        display: block;
+        padding: 11px;
+        background: linear-gradient(90deg, #2e8b57, #1f6f45);
+        color: #fff;
+        border: none;
+        border-radius: 12px;
+        font-size: 15px;
+        font-weight: 700;
+        cursor: pointer;
+        transform: translateY(-6px);
+        transition: 0.3s ease;
+      }
+      .ai-btn:hover {
+        background: linear-gradient(90deg, #297a4e, #185e38);
+      }
+
+      /* ===== عنوان البطاقة ===== */
+      .card-label {
+        font-size: 17px;
+        font-weight: 700;
+        color: #243447;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .card-value {
+        font-size: 18px;
+        font-weight: 600;
+      }
+
+      /* ===== سجل المواعيد ===== */
+      .log-box {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .log-item {
+        background: #eef1f4;
+        padding: 9px 12px;
+        border-radius: 10px;
+        font-size: 15px;
+        border-right: 4px solid #2e8b57;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+      }
+
+      /* ===== Responsive ===== */
+      @media (max-width: 768px) {
+        .columns {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+        body {
+          padding: 18px;
+        }
+        .title {
+          font-size: 28px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="title">سجل المريض — المستشفيات</div>
+
+    <div class="columns">
+      <!-- العمود الأول -->
+      <div>
+        <div class="card image-card">
+          <img src="./ahmed.jpg" />
+          <button class="ai-btn">التحقق بالذكاء الاصطناعي</button>
+        </div>
+
+        <div class="card">
+          <div class="card-label"><i class="fa-solid fa-user"></i> الاسم</div>
+          <hr />
+          <div class="card-value" id="patient-name">احمد سعود السلولي</div>
+        </div>
+
+        <div class="card">
+          <div class="card-label">
+            <i class="fa-solid fa-id-card"></i> رقم الهوية
+          </div>
+          <hr />
+          <div class="card-value" id="id-number">1123406701</div>
+        </div>
+      </div>
+
+      <!-- العمود الثاني -->
+      <div>
+        <div class="card">
+          <div class="card-label">
+            <i class="fa-solid fa-shield-heart"></i> رقم التأمين
+          </div>
+          <hr />
+          <div class="card-value" id="insurance-number">INS-5529912</div>
+        </div>
+
+        <div class="card">
+          <div class="card-label">
+            <i class="fa-solid fa-droplet"></i> فصيلة الدم
+          </div>
+          <hr />
+          <div class="card-value" id="blood-type">O+</div>
+        </div>
+      </div>
+
+      <!-- العمود الثالث -->
+      <div>
+        <div class="card">
+          <div class="card-label">
+            <i class="fa-solid fa-heart-pulse"></i> الحالات الصحية
+          </div>
+          <hr />
+          <div class="card-value" id="chronic">
+            سكري: <span id="diabetes">نعم</span><br />
+            ضغط: <span id="pressure">لا</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-label">
+            <i class="fa-solid fa-calendar-check"></i> سجل المواعيد
+          </div>
+          <hr />
+          <div class="log-box" id="appointments-list"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh"></script>
+    <script src="./app.js"></script>
+
+    <script>
+      const data = {
+        name: "احمد سعود السلولي",
+        id: "1234567890",
+        insurance: "INS-5529912",
+        blood: "O+",
+        diabetes: true,
+        pressure: false,
+
+        appointments: [
+          "موعد متابعة — 12/02/2024 — مستشفى الملك فهد",
+          "تحاليل شاملة — 01/11/2023 — مستشفى الأمير سلمان",
+          "زيارة طوارئ — 09/09/2023 — مستشفى الشميسي",
+          "موعد أسنان — 25/07/2023 — مركز طب الأسنان المتقدم",
+        ],
+      };
+
+      /* تعبئة البيانات */
+      document.getElementById("patient-name").textContent = data.name;
+      document.getElementById("id-number").textContent = data.id;
+      document.getElementById("insurance-number").textContent = data.insurance;
+      document.getElementById("blood-type").textContent = data.blood;
+
+      document.getElementById("diabetes").textContent = data.diabetes
+        ? "نعم"
+        : "لا";
+      document.getElementById("pressure").textContent = data.pressure
+        ? "نعم"
+        : "لا";
+
+      /* تعبئة سجل المواعيد */
+      let appList = document.getElementById("appointments-list");
+
+      data.appointments.forEach((item) => {
+        let div = document.createElement("div");
+        div.className = "log-item";
+        div.textContent = item;
+        appList.appendChild(div);
+      });
+    </script>
+  </body>
+</html>

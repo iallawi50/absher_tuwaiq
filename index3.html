@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>السجل الجامعي</title>
+
+    <!-- خط Tajawal -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- أيقونات -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      body {
+        margin: 0;
+        font-family: "Tajawal", sans-serif;
+        background: linear-gradient(#444929, #000);
+        min-height: 100vh;
+        padding: 40px;
+        color: #fff;
+      }
+
+      .title {
+        text-align: center;
+        font-size: 36px;
+        font-weight: 800;
+        margin-bottom: 40px;
+      }
+
+      .columns {
+        display: grid;
+        grid-template-columns: 260px 1fr 1fr;
+        gap: 35px;
+      }
+
+      .card {
+        background: #ffffff;
+        padding: 22px;
+        border-radius: 18px;
+        color: #222;
+        margin-bottom: 18px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.22);
+      }
+
+      /* ==== صورة و زر الذكاء ==== */
+      .image-card {
+        padding: 0;
+      }
+      .image-card img {
+        width: 100%;
+        border-radius: 18px;
+      }
+
+      /* زر الذكاء الاصطناعي */
+      .ai-btn {
+        width: calc(100% - 34px);
+        margin: 14px auto 20px auto;
+        display: block;
+        padding: 11px;
+        background: linear-gradient(90deg, #2e8b57, #1f6f45);
+        color: #fff;
+        border: none;
+        border-radius: 12px;
+        font-size: 15px;
+        font-weight: 700;
+        cursor: pointer;
+        transform: translateY(-6px);
+        transition: 0.3s ease;
+      }
+      .ai-btn:hover {
+        background: linear-gradient(90deg, #297a4e, #185e38);
+      }
+
+      .card-label {
+        font-size: 17px;
+        font-weight: 700;
+        color: #243447;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .card-value {
+        font-size: 18px;
+        font-weight: 600;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .columns {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+        body {
+          padding: 18px;
+        }
+        .title {
+          font-size: 28px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="title">السجل الجامعي</div>
+
+    <div class="columns">
+      <!-- العمود الأول -->
+      <div>
+        <div class="card image-card">
+          <img src="./ali.png" />
+          <button class="ai-btn">التحقق بالذكاء الاصطناعي</button>
+        </div>
+
+        <div class="card">
+          <div class="card-label">
+            <i class="fa-solid fa-user-graduate"></i> اسم الطالب
+          </div>
+          <hr />
+          <div class="card-value" id="student-name">علي حسين العبدالله</div>
+        </div>
+      </div>
+
+      <!-- العمود الثاني -->
+      <div>
+        <div class="card">
+          <div class="card-label">
+            <i class="fa-solid fa-id-card"></i> الرقم الجامعي
+          </div>
+          <hr />
+          <div class="card-value" id="student-id">441205887</div>
+        </div>
+
+        <div class="card">
+          <div class="card-label"><i class="fa-solid fa-book"></i> التخصص</div>
+          <hr />
+          <div class="card-value" id="major">علوم الحاسب</div>
+        </div>
+      </div>
+
+      <!-- العمود الثالث -->
+      <div>
+        <div class="card">
+          <div class="card-label">
+            <i class="fa-solid fa-circle-check"></i> الحالة الدراسية
+          </div>
+          <hr />
+          <div class="card-value" id="status">منتظم</div>
+        </div>
+
+        <div class="card">
+          <div class="card-label">
+            <i class="fa-solid fa-award"></i> الدرجة العلمية
+          </div>
+          <hr />
+          <div class="card-value" id="degree">بكالوريوس</div>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh"></script>
+    <script src="./app.js"></script>
+
+    <script>
+      const data = {
+        name: "علي حسين العبدالله",
+        id: "441205887",
+        major: "علوم الحاسب",
+        status: "منتظم",
+        degree: "بكالوريوس",
+      };
+
+      document.getElementById("student-name").textContent = data.name;
+      document.getElementById("student-id").textContent = data.id;
+      document.getElementById("major").textContent = data.major;
+      document.getElementById("status").textContent = data.status;
+      document.getElementById("degree").textContent = data.degree;
+    </script>
+  </body>
+</html>

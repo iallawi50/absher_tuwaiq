@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>لوحة الجهات الأمنية</title>
+
+    <!-- خط Tajawal -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- أيقونات Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      body {
+        margin: 0;
+        font-family: "Tajawal", sans-serif;
+
+        /* 🎨 خلفية جديدة فاخرة */
+        background: linear-gradient(#444929, #000);
+        min-height: 100vh;
+        padding: 40px;
+        color: #fff;
+      }
+
+      /* ===== عنوان الصفحة ===== */
+      .title {
+        text-align: center;
+        font-size: 36px;
+        font-weight: 800;
+        margin-bottom: 40px;
+      }
+
+      /* ===== الأعمدة ===== */
+      .columns {
+        display: grid;
+        grid-template-columns: 260px 1fr 1fr;
+        gap: 35px;
+      }
+
+      /* ===== الكارد ===== */
+      .card {
+        background: #ffffff; /* جديد */
+        padding: 22px;
+        border-radius: 18px;
+        color: #222;
+        margin-bottom: 18px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.22);
+      }
+
+      /* ===== الصورة ===== */
+      .image-card {
+        padding: 0;
+      }
+      .image-card img {
+        width: 100%;
+        border-radius: 18px;
+      }
+
+      /* زر الذكاء الاصطناعي */
+      .ai-btn {
+        width: calc(100% - 34px);
+        margin: 14px auto 26px auto;
+        display: block;
+        padding: 11px;
+
+        /* 🎨 لون زر جديد */
+        background: linear-gradient(90deg, #2e8b57, #1f6f45);
+
+        color: #fff;
+        border: none;
+        border-radius: 12px;
+        font-size: 15px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.3s ease;
+        transform: translateY(-6px);
+      }
+      .ai-btn:hover {
+        background: linear-gradient(90deg, #297a4e, #185e38);
+      }
+
+      /* ===== عنوان البطاقة ===== */
+      .card-label {
+        font-size: 17px;
+        font-weight: 700;
+
+        /* 🎨 لون عنوان جديد */
+        color: #243447;
+
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      /* ===== كروت المركبات ===== */
+      .vehicle-container {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      .vehicle-card {
+        background: #f6f8fa;
+        border-radius: 16px;
+        border: 1px solid #d7dde4;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.18);
+        overflow: hidden;
+      }
+
+      .vehicle-header {
+        padding: 14px 18px;
+        cursor: pointer;
+        font-size: 17px;
+        font-weight: 700;
+
+        color: #1a2333;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .vehicle-header:hover {
+        background: #e8edf3;
+      }
+
+      .vehicle-details {
+        display: none;
+        padding: 15px 20px;
+        background: #ffffff;
+        border-top: 1px solid #ddd;
+        font-size: 15px;
+      }
+      .vehicle-details div {
+        margin-bottom: 6px;
+      }
+
+      /* ===== السجل الأمني (مصفوفة واحدة دمج) ===== */
+      .log-box {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .log-item {
+        background: #eef1f4;
+        padding: 9px 12px;
+        border-radius: 10px;
+        font-size: 15px;
+
+        /* 🎨 لون حدود جديد */
+        border-right: 4px solid #2e8b57;
+
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+      }
+
+      /* ===== Responsive ===== */
+      @media (max-width: 768px) {
+        .columns {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+
+        .vehicles-card {
+          order: 5;
+        }
+        .security-card {
+          order: 6;
+        }
+
+        body {
+          padding: 18px;
+        }
+        .title {
+          font-size: 28px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="title">لوحة الجهات الأمنية</div>
+
+    <div class="columns">
+      <!-- العمود الأول -->
+      <div>
+        <div class="card image-card">
+          <img src="./riyadh.jpg" />
+          <button class="ai-btn" onclick="openAIModal()">
+            التحقق بالذكاء الاصطناعي
+          </button>
+        </div>
+
+        <div class="card">
+          <div class="card-label"><i class="fa-solid fa-user"></i> الاسم</div>
+          <hr />
+          <div class="card-value" id="patient-name">رياض سعيد الاسمري</div>
+        </div>
+
+        <div class="card id-card">
+          <div class="card-label">
+            <i class="fa-solid fa-id-card"></i> رقم الهوية
+          </div>
+          <hr />
+          <div class="card-value" id="id-number">1234567890</div>
+        </div>
+
+        <div class="card birth-card">
+          <div class="card-label">
+            <i class="fa-solid fa-calendar"></i> تاريخ الميلاد
+          </div>
+          <hr />
+          <div class="card-value" id="birth-date">1990-01-01</div>
+        </div>
+      </div>
+
+      <!-- العمود الثاني -->
+      <div>
+        <div class="card license-card">
+          <div class="card-label">
+            <i class="fa-solid fa-id-badge"></i> حالة الرخصة
+          </div>
+          <hr />
+          <div class="card-value" id="license-status">سارية</div>
+        </div>
+
+        <div class="card vehicles-card">
+          <div class="card-label">
+            <i class="fa-solid fa-car"></i> المركبات المسجلة
+          </div>
+          <hr />
+          <div class="vehicle-container" id="vehicles-list"></div>
+        </div>
+      </div>
+
+      <!-- العمود الثالث -->
+      <div>
+        <div class="card wanted-card">
+          <div class="card-label">
+            <i class="fa-solid fa-user-secret"></i> مطلوب أمنياً
+          </div>
+          <hr />
+          <div class="card-value safe" id="wanted-status">لا</div>
+        </div>
+
+        <div class="card security-card">
+          <div class="card-label">
+            <i class="fa-solid fa-shield-halved"></i> السجل الأمني والمخالفات
+          </div>
+          <hr />
+
+          <div class="log-box" id="security-log"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal التحقق بالذكاء الاصطناعي -->
+    <div id="ai-modal" class="ai-modal">
+      <div class="ai-modal-content">
+        <span class="close-modal" onclick="closeAIModal()">&times;</span>
+
+        <h2>التحقق بالذكاء الاصطناعي</h2>
+
+        <p>
+          قم برفع صورة حديثة أو التقاط صورة بالكاميرا للمقارنة مع الصورة
+          الأصلية.
+        </p>
+
+        <!-- رفع صورة -->
+        <input
+          type="file"
+          id="upload-image"
+          accept="image/*"
+          onchange="compareImages()"
+        />
+
+        <br /><br />
+
+        <!-- التقاط صورة -->
+        <button class="camera-btn" onclick="openCamera()">
+          التقاط صورة بالكاميرا
+        </button>
+
+        <video
+          id="camera"
+          autoplay
+          style="display: none; width: 100%; margin-top: 15px"
+        ></video>
+        <button
+          id="capture-btn"
+          style="display: none; margin-top: 10px"
+          onclick="capturePhoto()"
+        >
+          التقاط
+        </button>
+
+        <canvas id="canvas" style="display: none"></canvas>
+
+        <h3 id="result" style="margin-top: 20px"></h3>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh"></script>
+    <script src="./app.js"></script>
+    <script>
+      const data = {
+        id: "1098765432",
+        birth: "1987-04-12",
+
+        vehicles: [
+          {
+            type: "فورد تورس 2021",
+            year: 2021,
+            color: "أسود",
+            plate: "أ ب ج 1234",
+            form: "مجددّة",
+            vin: "5FATP8JZ5M5123456",
+            insurance: "ساري",
+            inspection: "ساري",
+          },
+          {
+            type: "جيب لاندكروزر 2022",
+            year: 2022,
+            color: "أبيض",
+            plate: "م ن ص 5521",
+            form: "سارية",
+            vin: "AHS992LKK2219823",
+            insurance: "ساري",
+            inspection: "ساري",
+          },
+        ],
+
+        license: "سارية",
+
+        wanted: false,
+
+        /* ❗ السجل الأمني + المخالفات → مصفوفة واحدة */
+        security: [
+          "تسجيل دخول ناجح عبر منصة النفاذ الوطني",
+          "تم التحقق من الهوية بالبصمة الرقمية",
+          "إجراء تدقيق أمني دوري مكتمل",
+          "تم الدخول من جهاز جديد — إشعار مرسل",
+
+          /* دمج المخالفات */
+          "مخالفة: تجاوز سرعة — 2021 — 300 ريال",
+          "مخالفة: وقوف خاطئ — 2023 — 100 ريال",
+          "مخالفة: عدم ربط الحزام — 2022 — 150 ريال",
+        ],
+      };
+
+      /* تعبئة البيانات */
+      document.getElementById("id-number").textContent = data.id;
+      document.getElementById("birth-date").textContent = data.birth;
+      document.getElementById("license-status").textContent = data.license;
+
+      /* المركبات */
+      let container = document.getElementById("vehicles-list");
+
+      data.vehicles.forEach((v, i) => {
+        let card = document.createElement("div");
+        card.className = "vehicle-card";
+
+        card.innerHTML = `
+        <div class="vehicle-header" onclick="toggleDetails(${i})">
+            ${v.type}
+            <i id="icon-${i}" class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+
+        <div id="details-${i}" class="vehicle-details">
+            <div><strong>نوع المركبة:</strong> ${v.type}</div>
+            <div><strong>الموديل:</strong> ${v.year}</div>
+            <div><strong>اللون:</strong> ${v.color}</div>
+            <div><strong>رقم اللوحة:</strong> ${v.plate}</div>
+            <div><strong>رقم الهيكل:</strong> ${v.vin}</div>
+            <div><strong>الاستمارة:</strong> ${v.form}</div>
+            <div><strong>التأمين:</strong> ${v.insurance}</div>
+            <div><strong>الفحص الدوري:</strong> ${v.inspection}</div>
+        </div>
+    `;
+
+        container.appendChild(card);
+      });
+
+      function toggleDetails(i) {
+        let details = document.getElementById("details-" + i);
+        let icon = document.getElementById("icon-" + i);
+
+        if (details.style.display === "block") {
+          details.style.display = "none";
+          icon.style.transform = "rotate(0deg)";
+        } else {
+          details.style.display = "block";
+          icon.style.transform = "rotate(180deg)";
+        }
+      }
+
+      /*السجل */
+      let sec = document.getElementById("security-log");
+      data.security.forEach((item) => {
+        let div = document.createElement("div");
+        div.className = "log-item";
+        div.textContent = item;
+        sec.appendChild(div);
+      });
+    </script>
+  </body>
+</html>
