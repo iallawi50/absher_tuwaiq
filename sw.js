@@ -1,42 +1,34 @@
-const CACHE_NAME = "static_cache";
-const STATIC_ASSETS = [
+const CACHE_NAME = "offline-cache-v1";
+
+const FILES_TO_CACHE = [
   "/",
-    "/index.html",
-    "/index2.html",
-    "/ahmed.jpg",
-    "/ali.png",
-    "/nadr.jpg",
-    "/riyadh.jpg",
-    '/app.js',
-    "/style.css",
-    "*"
+  "/index.html",
+  "/index2.html",
+  "/index3.html",
+  "/index4.html",
+  "/index5.html",
+  "/style.css",
+  "/app.js",
+  "/ahmed.jpg",
+  "/ali.png",
+  "/nadr.jpg",
+  "/riyadh.jpg"
 ];
 
-async function preCache() {
-  const cache = await caches.open(CACHE_NAME);
-  return cache.addAll(STATIC_ASSETS);
-}
-
-self.addEventListener("install", (event) => {
-  // console.log("[SW] installed");
-  event.waitUntil(preCache());
+// تثبيت الـ Service Worker
+self.addEventListener("install", event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(cache => {
+      return cache.addAll(FILES_TO_CACHE);
+    })
+  );
 });
 
-self.addEventListener("activate", (event) => {
-  // console.log("[SW] activated");
-});
-
-async function fetchAssets(event) {
-  try {
-    const response = await fetch(event.request);
-    return response;
-  } catch (err) {
-    const cache = await caches.open(CACHE_NAME);
-    return cache.match(event.request);
-  }
-}
-
-self.addEventListener("fetch", (event) => {
-  // console.log("[SW] fetched");
-  event.respondWith(fetchAssets(event));
+// جلب الملفات (تشغيل بدون إنترنت)
+self.addEventListener("fetch", event => {
+  event.respondWith(
+    fetch(event.request).catch(() => {
+      return caches.match(event.request);
+    })
+  );
 });

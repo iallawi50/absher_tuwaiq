@@ -406,9 +406,14 @@
         div.textContent = item;
         sec.appendChild(div);
       });
+    </script>
 
-      if (navigator.serviceWorker) {
-        navigator.serviceWorker.register("sw.js");
+    <script>
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker
+          .register("sw.js")
+          .then(() => console.log("Service Worker Registered"))
+          .catch((err) => console.log("SW Error", err));
       }
     </script>
   </body>
